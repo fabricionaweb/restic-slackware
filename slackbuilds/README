@@ -1,0 +1,1 @@
+rsync -avzh rsync://slackbuilds.org/slackbuilds/15.0/system/restic .

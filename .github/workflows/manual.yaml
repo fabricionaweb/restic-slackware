@@ -1,0 +1,34 @@
+name: Generate new image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: slackware/base
+
+    steps:
+      - name: Download SlackBuild
+        run: wget --no-check-certificate -O- https://slackbuilds.org/slackbuilds/15.0/system/restic.tar.gz | tar -xz
+
+      - name: Download Restic
+        working-directory: restic
+        run: |
+          source ./restic.info && wget --no-check-certificate $DOWNLOAD_x86_64
+          echo "version=$VERSION" >> $GITHUB_ENV
+
+      - name: Build Package
+        working-directory: restic
+        env:
+          OUTPUT: /opt
+          PKGTYPE: txz
+        run: |
+          chmod u+x restic.SlackBuild
+          ./restic.SlackBuild
+
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: restic-${{ env.version }}-x86_64
+          path: /opt/restic-*.txz

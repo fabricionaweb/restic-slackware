@@ -1,0 +1,5 @@
+wget --no-check-certificate -O- https://slackbuilds.org/slackbuilds/15.0/system/restic.tar.gz | tar -xz -C /opt
+cd /opt/restic
+source ./restic.info
+wget --no-check-certificate $DOWNLOAD_x86_64
+OUTPUT=$(pwd) PKGTYPE=txz ./restic.SlackBuild
