@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: slackware/base
+    container: andy5995/slackware-build-essential:15.0
 
     steps:
       - name: Download SlackBuild
